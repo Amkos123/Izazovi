@@ -1,4 +1,4 @@
-
+package Sedmica1;
 void main() {
 
     String ime = "Amar";

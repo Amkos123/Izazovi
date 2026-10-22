@@ -1,3 +1,4 @@
+package Sedmica2;
 /*
  * ZADATAK 6 (ZA DOMA) – Račun u kafiću
  * Programiranje u Javi – Auditorne vježbe, Sedmica 2

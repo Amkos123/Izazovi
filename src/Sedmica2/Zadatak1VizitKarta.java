@@ -1,3 +1,4 @@
+package Sedmica2;
 /*
  * ZADATAK 1 – Vizit karta
  * Programiranje u Javi – Auditorne vježbe, Sedmica 2

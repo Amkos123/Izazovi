@@ -1,3 +1,4 @@
+package Sedmica2;
 import java.util.Locale;
 
 /*

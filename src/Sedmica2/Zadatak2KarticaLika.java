@@ -1,3 +1,4 @@
+package Sedmica2;
 /*
  * ZADATAK 2 – Kartica lika za igru
  * Programiranje u Javi – Auditorne vježbe, Sedmica 2

@@ -1,3 +1,4 @@
+package Sedmica1;
 public class KomplimentMashina {
     void main(){
         String ime = "Mahir";

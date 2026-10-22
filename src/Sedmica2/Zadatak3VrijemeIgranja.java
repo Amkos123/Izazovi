@@ -1,3 +1,4 @@
+package Sedmica2;
 /*
  * ZADATAK 3 – Koliko sam vremena proveo igrajući?
  * Programiranje u Javi – Auditorne vježbe, Sedmica 2

@@ -1,3 +1,4 @@
+package Sedmica2;
 /*
  * ZADATAK 4 – Prosjek ocjena
  * Programiranje u Javi – Auditorne vježbe, Sedmica 2
