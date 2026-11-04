@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.io.FileWriter;
+import java.time.LocalDate;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -21,15 +23,16 @@ public class Main {
                 String name = parts[1];
                 int id = Integer.parseInt(parts[2]);
                 double salary = Double.parseDouble(parts[3]);
+                LocalDate dateOfJoining = LocalDate.parse(parts[4]);
 
                 if (type.equals("EMPLOYEE")) {
-                    employees.add(new Employee(name, id, salary));
+                    employees.add(new Employee(name, id, salary, dateOfJoining));
                 } else if (type.equals("MANAGER")) {
-                    double bonus = Double.parseDouble(parts[4]);
-                    employees.add(new Manager(name, id, salary, bonus));
+                    double bonus = Double.parseDouble(parts[5]);
+                    employees.add(new Manager(name, id, salary,dateOfJoining ,bonus ));
                 } else if (type.equals("PARTTIMEEMPLOYEE")) {
-                    int workhours = Integer.parseInt(parts[4]);
-                    employees.add(new PartTimeEmployee(name, id, salary, workhours));
+                    int workhours = Integer.parseInt(parts[5]);
+                    employees.add(new PartTimeEmployee(name, id, salary, dateOfJoining, workhours));
                 }
             }
         } catch (IOException e) {
@@ -44,6 +47,7 @@ public class Main {
             sortbySalary(employees);
             upisiUFajl(employees);
             employeeOfTheMonth();
+            searchEmployeeById(employees, 102);
         } else {
             System.out.println("Employee list is empty");
             System.exit(0);
@@ -61,7 +65,7 @@ public class Main {
     }
 
     public static void sortbySalary(ArrayList<Employee> employees) {
-        Collections.sort(employees, (e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
+        Collections.sort(employees);
         System.out.println("Employees sorted by salary:");
         for (Employee e : employees) {
             System.out.println(e.getDetails());
@@ -73,11 +77,11 @@ public class Main {
         try (FileWriter writer = new FileWriter("employees_sorted.txt")) {
             for (Employee e : employees) {
                 if (e instanceof Manager) {
-                    writer.write("MANAGER," + e.getName() + "," + e.getId() + "," + (e.getSalary() - ((Manager) e).getBonus()) + "," + ((Manager) e).getBonus() + "\n");
+                    writer.write("MANAGER," + e.getName() + "," + e.getId() + "," + (e.getSalary() - ((Manager) e).getBonus()) + "," + e.getDateOfJoining() + "," + ((Manager) e).getBonus() + "\n");
                 } else if (e instanceof PartTimeEmployee) {
-                    writer.write("PARTTIMEEMPLOYEE," + e.getName() + "," + e.getId() + "," + e.getSalary() + "," + ((PartTimeEmployee) e).getWorkhours() + "\n");
+                    writer.write("PARTTIMEEMPLOYEE," + e.getName() + "," + e.getId() + "," + e.getSalary() + "," + e.getDateOfJoining() + "," + ((PartTimeEmployee) e).getWorkhours() + "\n");
                 } else {
-                    writer.write("EMPLOYEE," + e.getName() + "," + e.getId() + "," + e.getSalary() + "\n");
+                    writer.write("EMPLOYEE," + e.getName() + "," + e.getId() + "," + e.getSalary() + "," + e.getDateOfJoining() + "\n");
                 }
             }
             System.out.println("Employees sorted by salary have been written to employees_sorted.txt");
@@ -87,31 +91,40 @@ public class Main {
 
     }
     public static void employeeOfTheMonth() {
-        Employee employee   = null;
+        Employee employee = null;
         try (BufferedReader br2 = new BufferedReader(new FileReader("employees_sorted.txt"))) {
 
-            String line= br2.readLine();
-             
+            String line = br2.readLine();
 
-                String[] parts = line.split(",");
-                String type = parts[0];
-                String name = parts[1];
-                int id = Integer.parseInt(parts[2]);
-                double salary = Double.parseDouble(parts[3]);
 
-                if (type.equals("EMPLOYEE")) {
-                    employee=new Employee(name, id, salary);
-                } else if (type.equals("MANAGER")) {
-                    double bonus = Double.parseDouble(parts[4]);
-                    employee=new Manager(name, id, salary, bonus);
-                } else if (type.equals("PARTTIMEEMPLOYEE")) {
-                    int workhours = Integer.parseInt(parts[4]);
-                    employee=new PartTimeEmployee(name, id, salary, workhours);
-                }
-                System.out.println("Employee of the month: " + employee.getDetails());
+            String[] parts = line.split(",");
+            String type = parts[0];
+            String name = parts[1];
+            int id = Integer.parseInt(parts[2]);
+            double salary = Double.parseDouble(parts[3]);
+            LocalDate dateOfJoining = LocalDate.parse(parts[4]);
+            if (type.equals("EMPLOYEE")) {
+                employee = new Employee(name, id, salary, dateOfJoining);
+            } else if (type.equals("MANAGER")) {
+                double bonus = Double.parseDouble(parts[5]);
+                employee = new Manager(name, id, salary, dateOfJoining, bonus);
+            } else if (type.equals("PARTTIMEEMPLOYEE")) {
+                int workhours = Integer.parseInt(parts[5]);
+                employee = new PartTimeEmployee(name, id, salary, dateOfJoining, workhours);
+            }
+            System.out.println("Employee of the month: " + employee.getDetails());
 
         } catch (IOException e) {
             System.out.println("Greska u čitanju file-a" + e.getMessage());
         }
+    }
+    public static void searchEmployeeById(ArrayList<Employee> employees, int id) {
+        for (Employee e : employees) {
+            if (e.getId() == id) {
+                System.out.println("Employee found: " + e.getDetails());
+                return;
+            }
+        }
+        System.out.println("Employee with ID " + id + " not found.");
     }
 }

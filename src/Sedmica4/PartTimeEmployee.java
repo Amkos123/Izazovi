@@ -1,10 +1,11 @@
 package Sedmica4;
+import java.time.LocalDate;
 
 public class PartTimeEmployee extends Employee {
     private int workhours;
 
-    public PartTimeEmployee(String name, int id, double salary, int workhours) {
-        super(name, id, salary);
+    public PartTimeEmployee(String name, int id, double salary, LocalDate dateOfJoining, int workhours) {
+        super(name, id, salary, dateOfJoining);
         this.workhours = workhours;
     }
 
