@@ -32,13 +32,13 @@ public class Konverter {
 
                     if (!Double.isFinite(iznos) || iznos < 0) {
                         JOptionPane.showMessageDialog(null, "Unesite ispravan pozitivan iznos");
-                        return;
+
                     }
                     double rezultat = izračun(iznos);
                     konvertovaniIznos.setText(String.format("%.2f", rezultat));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Unesite ispravan broj");
-                    return;
+
                 }
             }
             });
